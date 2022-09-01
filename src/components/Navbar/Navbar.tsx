@@ -3,7 +3,7 @@ import '../../App.css';
 
 interface NavbarProps { }
 
-function Navbar({ }: NavbarProps) {
+function Navbar() {
     return (
         <nav>
             <Box>
