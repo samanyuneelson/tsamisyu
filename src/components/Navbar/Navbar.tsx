@@ -1,8 +1,6 @@
 import { Box } from '@mui/material';
 import '../../App.css';
 
-interface NavbarProps { }
-
 function Navbar() {
     return (
         <nav>
