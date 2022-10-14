@@ -1,15 +1,14 @@
 import './App.css';
+import Header from './components/Header/Header';
 import Navbar from './components/Navbar/Navbar';
+import Portfolio from './components/Portfolio/Portfolio';
 
 function App() {
   return (
     <div className="App">
       <Navbar></Navbar>
-      <header className="App-header">
-       <p>
-          Hi, im Sam &#9996;
-        </p>
-      </header> 
+      <Header></Header>
+      <Portfolio></Portfolio>
     </div>
   );
 }

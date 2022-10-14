@@ -4,7 +4,7 @@ import '../../App.css';
 function Navbar() {
     return (
         <nav>
-            <Box>
+            <Box >
                 <ul>
                     <li>Home</li>
                     <li>About</li>
