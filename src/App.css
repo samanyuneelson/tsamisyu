@@ -33,26 +33,42 @@
 }
 
 nav {
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.26) 0%, rgba(0, 0, 0, 0.1378) 0.01%, rgba(0, 0, 0, 0.026) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.26) 0%,
+    rgba(0, 0, 0, 0.1378) 0.01%,
+    rgba(0, 0, 0, 0.026) 100%
+  );
   backdrop-filter: blur(40px);
   /* Note: backdrop-filter has minimal browser support */
   border-radius: 0px 0px 15px 15px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.300);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   position: fixed;
   width: 100%;
 }
 
+.marquee {
+  --gap: 5rem;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  gap: var(--gap);
+  user-select: none;
+}
+
+.marquee__content {
+  gap: var(--gap);
+}
+
 ul {
   list-style-type: none;
-  margin: 0 50px 0 0;
-  padding: 10px;
-  overflow: hidden;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
+  padding-inline-start: 0;
 }
 
-li {
+nav li {
   color: white;
   font-size: 1.5rem;
   padding: 10px;
@@ -72,7 +88,7 @@ li a:hover:not(.active) {
 }
 
 .portfolio {
-  background-color: #D9D9D9 ;
+  background-color: #d9d9d9;
 }
 
 .programmingIcon {
@@ -80,11 +96,7 @@ li a:hover:not(.active) {
 }
 
 .active {
-  background-color: #04AA6D;
-}
-
-.infiniteRunParent {
-  overflow:hidden;
+  background-color: #04aa6d;
 }
 
 .infiniteRun {
@@ -92,14 +104,18 @@ li a:hover:not(.active) {
   animation-duration: 30s;
   animation-timing-function: linear;
   animation-fill-mode: forwards;
-  animation-name: runn;
+  animation-name: scroll;
 }
 
-@keyframes runn {
+.marquee--hover-pause:hover .marquee__content {
+  animation-play-state: paused;
+}
+
+@keyframes scroll {
   0% {
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-3230px);
+    transform: translateX(calc(-100% - var(--gap)));
   }
 }
