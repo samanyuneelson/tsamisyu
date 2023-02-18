@@ -88,109 +88,109 @@ export default function Portfolio() {
       <Typography variant="h2">Portfolio</Typography>
       <Box display="flex" flexDirection="row" justifyContent="center">
         <div className="programmingIcon">
-          <img src={js} />
+          <img src={js} alt="" />
         </div>
         <div className="programmingIcon">
-          <img src={html} />
+          <img src={html} alt="" />
         </div>
         <div className="programmingIcon">
-          <img src={go} />
+          <img src={go} alt="" />
         </div>
         <div className="programmingIcon">
-          <img src={python} />
+          <img src={python} alt="" />
         </div>
         <div className="programmingIcon">
-          <img src={cpp} />
+          <img src={cpp} alt="" />
         </div>
       </Box>
       <Box className="marquee marquee--hover-pause ">
         <ul className="marquee__content infiniteRun">
           <li>
-            <img src={typescript} />
+            <img src={typescript} alt="" />
           </li>
           <li>
-            <img src={gatsby} />
+            <img src={gatsby} alt="" />
           </li>
           <li>
-            <img src={reactjs} />
+            <img src={reactjs} alt="" />
           </li>
           <li>
-            <img src={d3} />
+            <img src={d3} alt="" />
           </li>
           <li>
-            <img src={ros} />
+            <img src={ros} alt="" />
           </li>
           <li>
-            <img src={Fusion360} />
+            <img src={Fusion360} alt="" />
           </li>
           <li>
-            <img src={angular} />
+            <img src={angular} alt="" />
           </li>
           <li>
-            <img src={pandas} />
+            <img src={pandas} alt="" />
           </li>
           <li>
-            <img src={figma} />
+            <img src={figma} alt="" />
           </li>
           <li>
-            <img src={illustrator} />
+            <img src={illustrator} alt="" />
           </li>
           <li>
-            <img src={photoshop} />
+            <img src={photoshop} alt="" />
           </li>
           <li>
-            <img src={afterEffects} />
+            <img src={afterEffects} alt="" />
           </li>
           <li>
-            <img src={graphgl} />
+            <img src={graphgl} alt="" />
           </li>
           <li>
-            <img src={nextjs} />
+            <img src={nextjs} alt="" />
           </li>
         </ul>
 
         <ul className="marquee__content infiniteRun">
           <li>
-            <img src={typescript} />
+            <img src={typescript} alt="" />
           </li>
           <li>
-            <img src={gatsby} />
+            <img src={gatsby} alt="" />
           </li>
           <li>
-            <img src={reactjs} />
+            <img src={reactjs} alt="" />
           </li>
           <li>
-            <img src={d3} />
+            <img src={d3} alt="" />
           </li>
           <li>
-            <img src={ros} />
+            <img src={ros} alt="" />
           </li>
           <li>
-            <img src={Fusion360} />
+            <img src={Fusion360} alt="" />
           </li>
           <li>
-            <img src={angular} />
+            <img src={angular} alt="" />
           </li>
           <li>
-            <img src={pandas} />
+            <img src={pandas} alt="" />
           </li>
           <li>
-            <img src={figma} />
+            <img src={figma} alt="" />
           </li>
           <li>
-            <img src={illustrator} />
+            <img src={illustrator} alt="" />
           </li>
           <li>
-            <img src={photoshop} />
+            <img src={photoshop} alt="" />
           </li>
           <li>
-            <img src={afterEffects} />
+            <img src={afterEffects} alt="" />
           </li>
           <li>
-            <img src={graphgl} />
+            <img src={graphgl} alt="" />
           </li>
-          <li>
-            <img src={nextjs} />
+          <li> 
+            <img src={nextjs} alt="" />
           </li>
         </ul>
       </Box>
