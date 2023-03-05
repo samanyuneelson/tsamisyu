@@ -14,6 +14,7 @@ const StandardNavbar = styled(Box)`
     /* Note: backdrop-filter has minimal browser support */
     border-radius: 0px 0px 15px 15px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: -4px 4px 4px rgba(0, 0, 0, 0.25);
     position: fixed;
     width: 100%;
   }
