@@ -1,6 +1,11 @@
 import { Box, BoxTypeMap, Grid, styled, Typography } from "@mui/material";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
-import { useState } from "react";
+// import { useState } from "react";
+
+import kidangoorSnapshot from "../../assets/kidangoorWebsite.png";
+import lumiereSnapshot from "../../assets/lumiere20.png";
+import liveAbsoluteSnapshot from "../../assets/liveAbsolute.png";
+import pearlComputersSnapshot from "../../assets/pearlComputers.png";
 
 const CarouselStyle = styled(Box)`
   padding: 1%;
@@ -17,6 +22,11 @@ const CarouselStyle = styled(Box)`
   img {
     width: 100%;
     height: auto;
+    border-radius: 10px;
+  }
+
+  a{
+    color: lightblue;
   }
 
   .carousel-actions {
@@ -77,128 +87,122 @@ type CarouselProps = {
 export default function Carousel(props: CarouselProps) {
   // const { children } = props;
 
-  const [selectedCarousel, setSelectedCarousel] = useState(0);
+  // const [selectedCarousel, setSelectedCarousel] = useState(0);
 
-  const handleMoveToPrevSlide = () => {
-    if (selectedCarousel === 0) {
-      setSelectedCarousel(2);
-      return;
-    }
-    setSelectedCarousel(selectedCarousel - 1);
-  };
+  // const handleMoveToPrevSlide = () => {
+  //   if (selectedCarousel === 0) {
+  //     setSelectedCarousel(2);
+  //     return;
+  //   }
+  //   setSelectedCarousel(selectedCarousel - 1);
+  // };
 
-  const handleMoveToNextSlide = () => {
-    if (selectedCarousel === 2) {
-      setSelectedCarousel(0);
-      return;
-    }
-    setSelectedCarousel(selectedCarousel + 1);
-  };
+  // const handleMoveToNextSlide = () => {
+  //   if (selectedCarousel === 2) {
+  //     setSelectedCarousel(0);
+  //     return;
+  //   }
+  //   setSelectedCarousel(selectedCarousel + 1);
+  // };
 
-  const handleCarouselDotClick = (dotIndex: number) => {
-    setSelectedCarousel(dotIndex);
-  };
+  // const handleCarouselDotClick = (dotIndex: number) => {
+  //   setSelectedCarousel(dotIndex);
+  // };
 
   return (
     <CarouselStyle>
       {/* {children.forEach} */}
-      <Box hidden={selectedCarousel !== 0}>
+      {/* <Box hidden={selectedCarousel !== 0}> */}
+      <Box>
         <Grid container>
-          <Grid container item xs={6} className="projectTile">
+          <Grid container item xs={12} md={6} className="projectTile">
             <Grid container spacing={2}>
               <Grid item xs={6}>
-                <img
-                  src="https://images.unsplash.com/photo-1537211261771-e525b9e4049b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=450&q=80"
-                  alt="Squirrel zombie"
-                />
+                <img src={lumiereSnapshot} alt="Lumiere 2020 website" />
               </Grid>
               <Grid item container xs={6}>
-                <Typography variant="h4">Product Name</Typography>
+                <Typography variant="h4">Lumiere20</Typography>
                 <Typography
                   variant="subtitle2"
                   paragraph
                   sx={{ textAlign: "left" }}
                 >
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed
-                  quo nulla atque sapiente eaque at illum. Magni pariatur soluta
-                  fugiat amet hic, possimus vero necessitatibus culpa, provident
-                  expedita ullam quae.
+                  College of engineering kidangoor Annual technical fest
+                  website.
+                  <br/> 
+                  <a href="https://lumiere20.netlify.app/">click here.</a>
                 </Typography>
               </Grid>
             </Grid>
           </Grid>
-          <Grid container xs={6} className="projectTile">
+          <Grid container xs={12} md={6} className="projectTile">
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 <img
-                  src="https://images.unsplash.com/photo-1537211261771-e525b9e4049b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=450&q=80"
-                  alt="Squirrel zombie"
+                  src={kidangoorSnapshot}
+                  alt="College of Engineering Kidangoor Website"
                 />
               </Grid>
               <Grid item container xs={6}>
-                <Typography variant="h4">Product Name</Typography>
+                <Typography variant="h4" sx={{ textAlign: "left" }}>
+                  College of Engineering Kidangoor
+                </Typography>
                 <Typography
                   variant="subtitle2"
                   paragraph
                   sx={{ textAlign: "left" }}
                 >
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed
-                  quo nulla atque sapiente eaque at illum. Magni pariatur soluta
-                  fugiat amet hic, possimus vero necessitatibus culpa, provident
-                  expedita ullam quae.
+                  Official website of College of Engineering Kidangoor.
+                  <br/>
+                  <a href="https://www.ce-kgr.org/">click here.</a>
                 </Typography>
               </Grid>
             </Grid>
           </Grid>
-          <Grid container xs={6} className="projectTile">
+          <Grid container xs={12} md={6} className="projectTile">
             <Grid container spacing={2}>
               <Grid item xs={6}>
-                <img
-                  src="https://images.unsplash.com/photo-1537211261771-e525b9e4049b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=450&q=80"
-                  alt="Squirrel zombie"
-                />
+                <img src={liveAbsoluteSnapshot} alt="Live Absolute Website" />
               </Grid>
               <Grid item container xs={6}>
-                <Typography variant="h4">Product Name</Typography>
+                <Typography variant="h4">Live Absolute</Typography>
                 <Typography
                   variant="subtitle2"
                   paragraph
                   sx={{ textAlign: "left" }}
                 >
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed
-                  quo nulla atque sapiente eaque at illum. Magni pariatur soluta
-                  fugiat amet hic, possimus vero necessitatibus culpa, provident
-                  expedita ullam quae.
+                  Official Website for life coaching service live absolute.
+                  <br/>
+                  <a href="https://liveabsolute.org">click here.</a>
                 </Typography>
               </Grid>
             </Grid>
           </Grid>
-          <Grid container xs={6} className="projectTile">
+          <Grid container xs={12} md={6} className="projectTile">
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 <img
-                  src="https://images.unsplash.com/photo-1537211261771-e525b9e4049b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=450&q=80"
-                  alt="Squirrel zombie"
+                  src={pearlComputersSnapshot}
+                  alt="Pearl Computers Website"
                 />
               </Grid>
               <Grid item container xs={6}>
-                <Typography variant="h4">Product Name</Typography>
+                <Typography variant="h4">Pearl Computers</Typography>
                 <Typography
                   variant="subtitle2"
                   paragraph
                   sx={{ textAlign: "left" }}
                 >
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed
-                  quo nulla atque sapiente eaque at illum. Magni pariatur soluta
-                  fugiat amet hic, possimus vero necessitatibus culpa, provident
-                  expedita ullam quae.
+                  Official Website for Pearl Computers.
+                  <br/>
+                  <a href="https://pearlcomputer.org">click here.</a>
                 </Typography>
               </Grid>
             </Grid>
           </Grid>
         </Grid>
       </Box>
-      <Box hidden={selectedCarousel !== 1}>
+      {/* <Box hidden={selectedCarousel !== 1}>
         <img
           src="https://images.unsplash.com/photo-1503925802536-c9451dcd87b5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=450&q=80"
           alt="Zombie hands"
@@ -209,8 +213,8 @@ export default function Carousel(props: CarouselProps) {
           src="https://images.unsplash.com/photo-1509558567730-6c838437b06b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=450&q=80"
           alt="Zombie pumpkin"
         />
-      </Box>
-      <Box className="carousel-actions">
+      </Box> */}
+      {/* <Box className="carousel-actions">
         <button
           onClick={handleMoveToPrevSlide}
           aria-label="Previous"
@@ -223,8 +227,8 @@ export default function Carousel(props: CarouselProps) {
         >
           2
         </button>
-      </Box>
-      <Box className="carousel-dots">
+      </Box> */}
+      {/* <Box className="carousel-dots">
         <input
           onClick={() => handleCarouselDotClick(0)}
           className={selectedCarousel === 0 ? "carousel-dots" : "dot"}
@@ -246,7 +250,7 @@ export default function Carousel(props: CarouselProps) {
           name="dot"
           checked={selectedCarousel === 2}
         />
-      </Box>
+      </Box> */}
     </CarouselStyle>
   );
 }

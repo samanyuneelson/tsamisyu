@@ -1,7 +1,7 @@
-import { Tab, Tabs, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { styled } from "@mui/material/styles";
-import { useState } from "react";
+// import { useState } from "react";
 import Carousel from "../Carousel/Carousel";
 
 const CustomPortFolio = styled(Box)`
@@ -24,23 +24,23 @@ const CustomPortFolio = styled(Box)`
 `;
 
 export default function Portfolio() {
-  const [value, setValue] = useState(0);
+  // const [value, setValue] = useState(0);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-  };
+  // const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  //   setValue(newValue);
+  // };
 
-  function allyProps(index: number) {
-    return {
-      id: `simple-tab-${index}`,
-      "aria-controls": `simple-tabpanel-${index}`,
-    };
-  }
+  // function allyProps(index: number) {
+  //   return {
+  //     id: `simple-tab-${index}`,
+  //     "aria-controls": `simple-tabpanel-${index}`,
+  //   };
+  // }
 
   return (
-    <CustomPortFolio padding="5%">
+    <CustomPortFolio id="portfolio" padding="5%">
       <Box>
-        <Typography variant="h2">Portfolio</Typography>
+        <Typography variant="h2" paddingBottom={3}>Portfolio</Typography>
         <Box className="frostPane">
           <Box>
             {/* <Tabs
