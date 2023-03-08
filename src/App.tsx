@@ -3,6 +3,7 @@ import Header from './components/Header/Header';
 import Literacy from './components/Literacy/Literacy';
 import Navbar from './components/Navbar/Navbar';
 import Portfolio from './components/Portfolio/Portfolio';
+import WhatsappIcon from './components/whatsappIcon/whatsappIcon';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Header/>
       <Literacy/>
       <Portfolio/>
+      <WhatsappIcon number="8281828578" />
     </div>
   );
 }

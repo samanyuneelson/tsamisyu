@@ -49,6 +49,11 @@ const MarqueeList = styled(Box)`
     padding: 4% 2% 2% 2%;
   }
 
+  .programmingIcon img {
+    width: 80%;
+    height: auto;
+  }
+
   .infiniteRun {
     animation-iteration-count: infinite;
     animation-duration: 30s;
@@ -77,11 +82,16 @@ const MarqueeList = styled(Box)`
     padding: 14px 16px;
     text-decoration: none;
   }
+
+  li img {
+    height: 80px;
+    width: auto;
+  }
 `;
 
 export default function Literacy() {
   return (
-    <MarqueeList padding="5%">
+    <MarqueeList id="about" padding="5% 0%">
       <Typography variant="h2">Literacy</Typography>
       <Box display="flex" flexDirection="row" justifyContent="center">
         <div className="programmingIcon">
