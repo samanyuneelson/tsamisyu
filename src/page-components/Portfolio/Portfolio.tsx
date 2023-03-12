@@ -1,8 +1,8 @@
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { styled } from "@mui/material/styles";
+import Carousel from "../../components/Carousel/Carousel";
 // import { useState } from "react";
-import Carousel from "../Carousel/Carousel";
 
 const CustomPortFolio = styled(Box)`
   background-color: #414141;
