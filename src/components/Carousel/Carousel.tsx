@@ -1,4 +1,4 @@
-import { Box, BoxTypeMap, Grid, styled, Typography } from "@mui/material";
+import { Box, FabTypeMap, Grid, styled, Typography } from "@mui/material";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 // import { useState } from "react";
 
@@ -81,7 +81,7 @@ const CarouselStyle = styled(Box)`
 `;
 
 type CarouselProps = {
-  children: OverridableComponent<BoxTypeMap<{}, "div">>[];
+  children: OverridableComponent<FabTypeMap<{}, "div">>[];
 };
 
 export default function Carousel(props: CarouselProps) {

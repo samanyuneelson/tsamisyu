@@ -10,11 +10,20 @@ const CustomWhatsappIcon = styled(IconButton)`
   height: 60px;
   bottom: 40px;
   margin-top: -60px;
-  float: right;
-  right: 40px;
   background-color: #128c7e;
   box-shadow: 2px 2px 5px black;
   color: white;
+
+  .left {
+    float: left;
+    left: 40px;
+  }
+
+  .right {
+    color: black;
+    float: right;
+    right: 40px;
+  }
 
   svg {
     width: 35px;
@@ -27,13 +36,27 @@ const CustomWhatsappIcon = styled(IconButton)`
 `;
 
 interface WhatsappProps {
-  number: string;
+  whatsappNumber: string;
+  /** position of the button could be "left" or "right". default is right */
+  position?: string;
+  /** distance offset from ether position. Default is 40px */
+  spacing?: string;
 }
 
-const WhatsappIcon = (props: WhatsappProps) => {
-  const href = `https://wa.me/${props.number}`;
+const WhatsappIcon = ({
+  whatsappNumber,
+  position = "right",
+  spacing = "40px"
+}: WhatsappProps) => {
+  const href = `https://wa.me/${whatsappNumber}`;
   return (
-    <CustomWhatsappIcon color="secondary" aria-label="Contact" size="large" onClick={() => window.open(href)}>
+    <CustomWhatsappIcon
+      sx={{float: position, right: spacing, left: spacing}}
+      color="secondary"
+      aria-label="Contact"
+      size="large"
+      onClick={() => window.open(href)}
+    >
       <WhatsAppIcon />
     </CustomWhatsappIcon>
   );
