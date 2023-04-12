@@ -87,6 +87,13 @@ const MarqueeList = styled(Box)`
     height: 80px;
     width: auto;
   }
+
+  @media screen and (max-width: 992px) {
+    li img {
+    height: 50px;
+    width: auto;
+  }
+  }
 `;
 
 export default function Literacy() {
