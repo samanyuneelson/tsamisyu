@@ -143,8 +143,8 @@ export default function Carousel(props: CarouselProps) {
               <Grid item xs={6}>
                 <img src={lumiereSnapshot} alt="Lumiere 2020 website" />
               </Grid>
-              <Grid item container xs={6}>
-                <Typography variant="h5">Lumiere20</Typography>
+              <Grid item xs={6}>
+                <Typography variant="h5" sx={{ textAlign: "left" }}>Lumiere20</Typography>
                 <Typography
                   variant="subtitle2"
                   paragraph
@@ -168,7 +168,7 @@ export default function Carousel(props: CarouselProps) {
                   alt="College of Engineering Kidangoor Website"
                 />
               </Grid>
-              <Grid item container xs={6}>
+              <Grid item xs={6}>
                 <Typography variant="h5" sx={{ textAlign: "left" }}>
                   CE Kidangoor
                 </Typography>
@@ -191,7 +191,7 @@ export default function Carousel(props: CarouselProps) {
                 <Grid item xs={6}>
                   <img src={liveAbsoluteSnapshot} alt="Live Absolute Website" />
                 </Grid>
-                <Grid item container xs={6}>
+                <Grid item xs={6}>
                   <Typography variant="h5" sx={{ textAlign: "left" }}>
                     Live Absolute
                   </Typography>
@@ -217,7 +217,7 @@ export default function Carousel(props: CarouselProps) {
                     alt="Pearl Computers Website"
                   />
                 </Grid>
-                <Grid item container xs={6}>
+                <Grid item xs={6}>
                   <Typography variant="h5" sx={{ textAlign: "left" }}>
                     Pearl Computers
                   </Typography>
