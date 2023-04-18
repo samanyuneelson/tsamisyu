@@ -93,6 +93,10 @@ const MarqueeList = styled(Box)`
     height: 50px;
     width: auto;
   }
+
+  h2{
+      font-size: 1.5rem !important;
+    }
   }
 `;
 

@@ -21,6 +21,12 @@ const CustomPortFolio = styled(Box)`
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
     box-shadow: -4px 4px 4px rgba(0, 0, 0, 0.25);
   }
+
+  @media screen and (max-width: 992px) {
+    h2 {
+      font-size: 1.5rem !important;
+    }
+  }
 `;
 
 export default function Portfolio() {
@@ -40,7 +46,9 @@ export default function Portfolio() {
   return (
     <CustomPortFolio id="portfolio" padding="5%">
       <Box>
-        <Typography variant="h2" paddingBottom={3}>Portfolio</Typography>
+        <Typography variant="h2" paddingBottom={3}>
+          Portfolio
+        </Typography>
         <Box className="frostPane">
           <Box>
             {/* <Tabs
@@ -51,7 +59,7 @@ export default function Portfolio() {
               <Tab label="Projects" {...allyProps(0)} />
               <Tab label="Libraries" {...allyProps(1)} />
             </Tabs> */}
-            <Carousel children={[]}/>
+            <Carousel children={[]} />
           </Box>
         </Box>
       </Box>

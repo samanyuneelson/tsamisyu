@@ -16,7 +16,19 @@ const CarouselStyle = styled(Box)`
   }
 
   .projectTile {
-    padding: 4%;
+    padding: 2%;
+  }
+
+  .projectTile > a {
+    padding: 2%;
+    text-decoration: none;
+    color: white;
+    border-radius: 15px;
+  }
+
+  .projectTile > a:hover {
+    background-color: #1e1e1e;
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
   }
 
   img {
@@ -25,7 +37,7 @@ const CarouselStyle = styled(Box)`
     border-radius: 10px;
   }
 
-  a{
+  a {
     color: lightblue;
   }
 
@@ -78,6 +90,16 @@ const CarouselStyle = styled(Box)`
       opacity: 1;
     }
   }
+
+  @media screen and (max-width: 992px) {
+    h5 {
+      font-size: 1rem !important;
+      text-align: left;
+    }
+    p {
+      font-size: 0.5rem !important;
+    }
+  }
 `;
 
 type CarouselProps = {
@@ -116,12 +138,13 @@ export default function Carousel(props: CarouselProps) {
       <Box>
         <Grid container>
           <Grid container item xs={12} md={6} className="projectTile">
+            <a href="https://lumiere20.netlify.app/">
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 <img src={lumiereSnapshot} alt="Lumiere 2020 website" />
               </Grid>
               <Grid item container xs={6}>
-                <Typography variant="h4">Lumiere20</Typography>
+                <Typography variant="h5">Lumiere20</Typography>
                 <Typography
                   variant="subtitle2"
                   paragraph
@@ -129,13 +152,15 @@ export default function Carousel(props: CarouselProps) {
                 >
                   College of engineering kidangoor Annual technical fest
                   website.
-                  <br/> 
+                  <br />
                   <a href="https://lumiere20.netlify.app/">click here.</a>
                 </Typography>
               </Grid>
             </Grid>
+            </a>
           </Grid>
           <Grid container xs={12} md={6} className="projectTile">
+            <a href="https://www.ce-kgr.org/">
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 <img
@@ -144,8 +169,8 @@ export default function Carousel(props: CarouselProps) {
                 />
               </Grid>
               <Grid item container xs={6}>
-                <Typography variant="h4" sx={{ textAlign: "left" }}>
-                  College of Engineering Kidangoor
+                <Typography variant="h5" sx={{ textAlign: "left" }}>
+                  CE Kidangoor
                 </Typography>
                 <Typography
                   variant="subtitle2"
@@ -153,52 +178,61 @@ export default function Carousel(props: CarouselProps) {
                   sx={{ textAlign: "left" }}
                 >
                   Official website of College of Engineering Kidangoor.
-                  <br/>
+                  <br />
                   <a href="https://www.ce-kgr.org/">click here.</a>
                 </Typography>
               </Grid>
             </Grid>
+            </a>
           </Grid>
           <Grid container xs={12} md={6} className="projectTile">
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <img src={liveAbsoluteSnapshot} alt="Live Absolute Website" />
+            <a href="https://liveabsolute.org">
+              <Grid container spacing={2}>
+                <Grid item xs={6}>
+                  <img src={liveAbsoluteSnapshot} alt="Live Absolute Website" />
+                </Grid>
+                <Grid item container xs={6}>
+                  <Typography variant="h5" sx={{ textAlign: "left" }}>
+                    Live Absolute
+                  </Typography>
+                  <Typography
+                    variant="subtitle2"
+                    paragraph
+                    sx={{ textAlign: "left" }}
+                  >
+                    Official Website for life coaching service live absolute.
+                    <br />
+                    <a href="https://liveabsolute.org">click here.</a>
+                  </Typography>
+                </Grid>
               </Grid>
-              <Grid item container xs={6}>
-                <Typography variant="h4">Live Absolute</Typography>
-                <Typography
-                  variant="subtitle2"
-                  paragraph
-                  sx={{ textAlign: "left" }}
-                >
-                  Official Website for life coaching service live absolute.
-                  <br/>
-                  <a href="https://liveabsolute.org">click here.</a>
-                </Typography>
-              </Grid>
-            </Grid>
+            </a>
           </Grid>
           <Grid container xs={12} md={6} className="projectTile">
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <img
-                  src={pearlComputersSnapshot}
-                  alt="Pearl Computers Website"
-                />
+            <a href="https://pearlcomputer.org">
+              <Grid container spacing={2}>
+                <Grid item xs={6}>
+                  <img
+                    src={pearlComputersSnapshot}
+                    alt="Pearl Computers Website"
+                  />
+                </Grid>
+                <Grid item container xs={6}>
+                  <Typography variant="h5" sx={{ textAlign: "left" }}>
+                    Pearl Computers
+                  </Typography>
+                  <Typography
+                    variant="subtitle2"
+                    paragraph
+                    sx={{ textAlign: "left" }}
+                  >
+                    Official Website for Pearl Computers.
+                    <br />
+                    <a href="https://pearlcomputer.org">click here.</a>
+                  </Typography>
+                </Grid>
               </Grid>
-              <Grid item container xs={6}>
-                <Typography variant="h4">Pearl Computers</Typography>
-                <Typography
-                  variant="subtitle2"
-                  paragraph
-                  sx={{ textAlign: "left" }}
-                >
-                  Official Website for Pearl Computers.
-                  <br/>
-                  <a href="https://pearlcomputer.org">click here.</a>
-                </Typography>
-              </Grid>
-            </Grid>
+            </a>
           </Grid>
         </Grid>
       </Box>
