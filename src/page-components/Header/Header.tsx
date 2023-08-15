@@ -1,7 +1,8 @@
 import { styled } from "@mui/material/styles";
-import { Box } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 
 import headerImage from "../../assets/header.png";
+import resume from "../../assets/samanyuNeelson.pdf";
 
 const StandardHeader = styled(Box)`
   .App-header {
@@ -16,7 +17,18 @@ const StandardHeader = styled(Box)`
     justify-content: center;
     font-size: calc(10px + 2vmin);
     color: white;
-    padding: 100px;
+    padding: 10%;
+  }
+  @media screen and (max-width: 992px) {
+    h1 {
+      font-size: 2rem !important;
+      text-align: left;
+    }
+
+    h4 {
+      font-size: 1rem !important;
+      text-align: left;
+    }
   }
 `;
 
@@ -24,8 +36,18 @@ export default function Header() {
   return (
     <StandardHeader>
       <header className="App-header">
-        <h1>Hi, im Sam &#9996;</h1>
-        <p>Creator | Developer | Designer</p>
+        <Typography variant="h1">Hi, im Sam &#9996;</Typography>
+        <Typography variant="h4">Creator | Developer | Designer</Typography>
+        <Button
+          color="success"
+          href={resume}
+          variant="contained"
+          sx={{
+            marginTop: "2%",
+          }}
+        >
+          Resume
+        </Button>
       </header>
     </StandardHeader>
   );

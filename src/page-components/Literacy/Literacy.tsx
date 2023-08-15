@@ -32,6 +32,11 @@ const MarqueeList = styled(Box)`
     padding-inline-start: 0;
   }
 
+  h2 {
+    display: flex !important;
+    justify-content: center !important;
+  }
+
   .marquee {
     --gap: 5rem;
     display: flex;
@@ -86,6 +91,17 @@ const MarqueeList = styled(Box)`
   li img {
     height: 80px;
     width: auto;
+  }
+
+  @media screen and (max-width: 992px) {
+    li img {
+    height: 50px;
+    width: auto;
+  }
+
+  h2{
+      font-size: 1.5rem !important;
+    }
   }
 `;
 
