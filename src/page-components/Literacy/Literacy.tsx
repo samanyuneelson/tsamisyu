@@ -32,6 +32,11 @@ const MarqueeList = styled(Box)`
     padding-inline-start: 0;
   }
 
+  h2 {
+    display: flex !important;
+    justify-content: center !important;
+  }
+
   .marquee {
     --gap: 5rem;
     display: flex;

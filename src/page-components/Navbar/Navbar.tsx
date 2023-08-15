@@ -110,10 +110,10 @@ const NavList = [
     name: "Portfolio",
     link: "/#portfolio",
   },
-  {
-    name: "Blog",
-    link: "",
-  },
+  // {
+  //   name: "Blog",
+  //   link: "",
+  // },
 ];
 
 function Navbar() {

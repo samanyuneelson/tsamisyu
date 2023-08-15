@@ -6,7 +6,7 @@ import Portfolio from "../page-components/Portfolio/Portfolio";
 import Literacy from "../page-components/Literacy/Literacy";
 import WhatsappIcon from "../components/whatsappIcon/whatsappIcon";
 
-function LandingPage() {
+export function LandingPage() {
   return (
     <Box>
       <Navbar />
@@ -18,4 +18,10 @@ function LandingPage() {
   );
 }
 
-export default LandingPage;
+export function PageNotFound() {
+ return (
+  <Box>
+    Page Not Found, Coming soon
+  </Box>
+ )
+}
