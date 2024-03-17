@@ -39,10 +39,6 @@ export default function TrackerPage() {
     },
   };
 
-  useEffect(() => {
-    getTrackerData();
-  }, []);
-
   const getTrackerData = () => {
     axios
       .get("/tracker", config)
@@ -59,6 +55,30 @@ export default function TrackerPage() {
         // always executed
       });
   };
+
+  useEffect(() => {
+    const config = {
+      baseURL: "http://localhost:8000",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    axios
+      .get("/tracker", config)
+      .then(function (response) {
+        // handle success
+        setData(response.data);
+        console.log(response);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+      .finally(function () {
+        // always executed
+      });
+  }, []);
 
   const day = "Today";
 
@@ -79,9 +99,8 @@ export default function TrackerPage() {
     const timeNow = getTodayEpoch();
     let timestamps = [];
     for (let i = 1; i <= 7; i++) {
-      timestamps[i] = timeNow + dayEpoch * i;
+      timestamps[i - 1] = timeNow + dayEpoch * i;
     }
-    console.debug(timestamps);
     return timestamps;
   };
 
