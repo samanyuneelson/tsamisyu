@@ -4,8 +4,11 @@ import Navbar from "../page-components/Navbar/Navbar";
 import Portfolio from "../page-components/Portfolio/Portfolio";
 import Literacy from "../page-components/Literacy/Literacy";
 import WhatsappIcon from "../components/whatsappIcon/whatsappIcon";
-export { default as Tracker } from "./tracker";
+import NotesPage from "./notes";
+import TrackerPage from "./tracker";
+import PlayGroundPage from "./playground";
 
+export { NotesPage, TrackerPage, PlayGroundPage };
 
 export function LandingPage() {
   return (
@@ -20,9 +23,5 @@ export function LandingPage() {
 }
 
 export function PageNotFound() {
- return (
-  <Box>
-    Page Not Found, Coming soon
-  </Box>
- )
+  return <Box>Page Not Found, Coming soon</Box>;
 }

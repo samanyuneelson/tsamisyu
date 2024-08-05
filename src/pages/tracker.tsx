@@ -1,4 +1,16 @@
-import { Box, MenuItem, Select } from "@mui/material";
+import {
+  Box,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  IconButton,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
+import Button from "@mui/material/Button";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -8,6 +20,8 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import AddIcon from "@mui/icons-material/Add";
+import React from "react";
 
 enum GradePoints {
   O = "O",
@@ -17,6 +31,11 @@ enum GradePoints {
   D = "D",
   E = "E",
   F = "F",
+}
+
+export interface SimpleDialogProps {
+  open: boolean;
+  handleClose: () => void;
 }
 
 interface Grades {
@@ -31,6 +50,7 @@ interface Tracker {
 
 export default function TrackerPage() {
   const [data, setData] = useState<Tracker[]>();
+  const [open, setOpen] = React.useState(false);
 
   const config = {
     baseURL: "http://localhost:8000",
@@ -80,6 +100,14 @@ export default function TrackerPage() {
       });
   }, []);
 
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const day = "Today";
 
   const dayEpoch = 86400000;
@@ -99,7 +127,7 @@ export default function TrackerPage() {
     const timeNow = getTodayEpoch();
     let timestamps = [];
     for (let i = 1; i <= 7; i++) {
-      timestamps[i - 1] = timeNow + dayEpoch * i;
+      timestamps[i - 1] = timeNow - dayEpoch * i;
     }
     return timestamps;
   };
@@ -175,9 +203,88 @@ export default function TrackerPage() {
                 </TableCell>
               </TableRow>
             ))}
+            <TableRow>
+              <TableCell>
+                <IconButton
+                  onClick={handleClickOpen}
+                  title="Add Category"
+                  aria-label="Add Category"
+                >
+                  <AddIcon />
+                </IconButton>
+              </TableCell>
+            </TableRow>
           </TableBody>
         </Table>
       </TableContainer>
+      <SimpleDialog open={open} handleClose={handleClose} />
     </Box>
+  );
+}
+
+function SimpleDialog(props: SimpleDialogProps) {
+  const { handleClose, open } = props;
+  const [category, setCategory] = React.useState("");
+
+  const config = {
+    baseURL: "http://localhost:8000",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  const addCategory = () => {
+    console.debug("gg");
+    const body: Tracker = {
+      title: category,
+      grades: {},
+    };
+    axios
+      .post(`/tracker`, body, config)
+      .then(function (response) {
+        // handle success
+        console.log(response);
+        handleClose();
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+      .finally(function () {
+        // always executed
+      });
+  };
+
+  return (
+    <Dialog
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <DialogTitle id="alert-dialog-title">{"Add Category"}</DialogTitle>
+      <DialogContent>
+        <DialogContentText>Add a category to track.</DialogContentText>
+        <TextField
+          autoFocus
+          required
+          margin="dense"
+          id="name"
+          name="Category"
+          label="Category"
+          type="text"
+          fullWidth
+          variant="standard"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+        />
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose}>Cancel</Button>
+        <Button onClick={addCategory} autoFocus>
+          Add
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 }
