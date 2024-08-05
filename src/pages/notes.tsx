@@ -18,8 +18,8 @@ export default function NotesPage() {
     const context = canvasRef.current?.getContext("2d");
     let isPainting = false;
     let lineWidth = 5;
-    let startX: number;
-    let startY: number;
+    // let startX: number;
+    // let startY: number;
     const canvasOffsetX = canvasRef.current?.offsetLeft;
     const canvasOffsetY = canvasRef.current?.offsetTop;
     console.debug("canvasRef", {
@@ -44,8 +44,8 @@ export default function NotesPage() {
       canvasRef.current.height = window.innerHeight - canvasOffsetY;
       canvasRef.current.onmousedown = (ev: MouseEvent) => {
         isPainting = true;
-        startX = ev.clientX;
-        startY = ev.clientY;
+        // startX = ev.clientX;
+        // startY = ev.clientY;
         return null;
       };
       canvasRef.current.onmouseup = (ev: MouseEvent) => {
