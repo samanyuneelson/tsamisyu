@@ -1,10 +1,12 @@
 import "./App.css";
-import { LandingPage, PageNotFound, Tracker } from "./pages";
 import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-} from "react-router-dom";
+  LandingPage,
+  PageNotFound,
+  TrackerPage,
+  NotesPage,
+  PlayGroundPage,
+} from "./pages";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
@@ -14,7 +16,9 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/tracker" element={<Tracker />} />
+        <Route path="/tracker" element={<TrackerPage />} />
+        <Route path="/notes" element={<NotesPage />} />
+        <Route path="/playground" element={<PlayGroundPage />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </Router>

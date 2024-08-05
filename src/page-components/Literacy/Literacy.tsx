@@ -95,11 +95,11 @@ const MarqueeList = styled(Box)`
 
   @media screen and (max-width: 992px) {
     li img {
-    height: 50px;
-    width: auto;
-  }
+      height: 50px;
+      width: auto;
+    }
 
-  h2{
+    h2 {
       font-size: 1.5rem !important;
     }
   }
@@ -117,13 +117,13 @@ export default function Literacy() {
           <img src={html} alt="" />
         </div>
         <div className="programmingIcon">
+          <img src={cpp} alt="" />
+        </div>
+        <div className="programmingIcon">
           <img src={go} alt="" />
         </div>
         <div className="programmingIcon">
           <img src={python} alt="" />
-        </div>
-        <div className="programmingIcon">
-          <img src={cpp} alt="" />
         </div>
       </Box>
       <Box className="marquee marquee--hover-pause ">
