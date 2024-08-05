@@ -5,15 +5,6 @@ import { useEffect, useRef } from "react";
 export default function NotesPage() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const draw = (ctx: CanvasRenderingContext2D | null | undefined) => {
-    if (ctx) {
-      ctx.fillStyle = "#000000";
-      ctx.beginPath();
-      ctx.arc(50, 100, 20, 0, 2 * Math.PI);
-      ctx.fill();
-    }
-  };
-
   useEffect(() => {
     const context = canvasRef.current?.getContext("2d");
     let isPainting = false;
