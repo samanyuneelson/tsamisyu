@@ -139,50 +139,54 @@ export default function Carousel(props: CarouselProps) {
         <Grid container>
           <Grid container item xs={12} md={6} className="projectTile">
             <a href="https://lumiere20.netlify.app/">
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <img src={lumiereSnapshot} alt="Lumiere 2020 website" />
+              <Grid container spacing={2}>
+                <Grid item xs={6}>
+                  <img src={lumiereSnapshot} alt="Lumiere 2020 website" />
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography variant="h5" sx={{ textAlign: "left" }}>
+                    Lumiere20
+                  </Typography>
+                  <Typography
+                    variant="subtitle2"
+                    paragraph
+                    sx={{ textAlign: "left" }}
+                  >
+                    College of engineering kidangoor Annual technical fest
+                    website.
+                    <br />
+                    <a href="https://lumiere20.netlify.app/">click here.</a>
+                  </Typography>
+                </Grid>
               </Grid>
-              <Grid item xs={6}>
-                <Typography variant="h5" sx={{ textAlign: "left" }}>Lumiere20</Typography>
-                <Typography
-                  variant="subtitle2"
-                  paragraph
-                  sx={{ textAlign: "left" }}
-                >
-                  College of engineering kidangoor Annual technical fest
-                  website.
-                  <br />
-                  <a href="https://lumiere20.netlify.app/">click here.</a>
-                </Typography>
-              </Grid>
-            </Grid>
             </a>
           </Grid>
           <Grid container xs={12} md={6} className="projectTile">
-            <a href="https://www.ce-kgr.org/">
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <img
-                  src={kidangoorSnapshot}
-                  alt="College of Engineering Kidangoor Website"
-                />
+            <a href="https://web.archive.org/web/20240702114314/https://www.ce-kgr.org/">
+              <Grid container spacing={2}>
+                <Grid item xs={6}>
+                  <img
+                    src={kidangoorSnapshot}
+                    alt="College of Engineering Kidangoor Website"
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography variant="h5" sx={{ textAlign: "left" }}>
+                    CE Kidangoor
+                  </Typography>
+                  <Typography
+                    variant="subtitle2"
+                    paragraph
+                    sx={{ textAlign: "left" }}
+                  >
+                    Official website of College of Engineering Kidangoor.
+                    <br />
+                    <a href="https://web.archive.org/web/20240702114314/https://www.ce-kgr.org/">
+                      click here.
+                    </a>
+                  </Typography>
+                </Grid>
               </Grid>
-              <Grid item xs={6}>
-                <Typography variant="h5" sx={{ textAlign: "left" }}>
-                  CE Kidangoor
-                </Typography>
-                <Typography
-                  variant="subtitle2"
-                  paragraph
-                  sx={{ textAlign: "left" }}
-                >
-                  Official website of College of Engineering Kidangoor.
-                  <br />
-                  <a href="https://www.ce-kgr.org/">click here.</a>
-                </Typography>
-              </Grid>
-            </Grid>
             </a>
           </Grid>
           <Grid container xs={12} md={6} className="projectTile">
