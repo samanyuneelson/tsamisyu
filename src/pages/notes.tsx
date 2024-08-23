@@ -60,8 +60,12 @@ export default function NotesPage() {
 
   const putImage = () => {
     if (canvasRef.current?.getContext) {
-      const myImage = canvasRef.current?.toDataURL("image/png");
-      console.log(myImage);
+      const image = new Image();
+      image.src = canvasRef.current?.toDataURL();
+      const link = document.createElement("a");
+      link.href = image.src;
+      link.download = "todo.jpg";
+      link.click();
     }
   };
 
