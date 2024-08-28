@@ -4,11 +4,12 @@ import Navbar from "../page-components/Navbar/Navbar";
 import Portfolio from "../page-components/Portfolio/Portfolio";
 import Literacy from "../page-components/Literacy/Literacy";
 import WhatsappIcon from "../components/whatsappIcon/whatsappIcon";
-import NotesPage from "./notes";
-import TrackerPage from "./tracker";
-import PlayGroundPage from "./playground";
+import NotesPage from "./Notes";
+import TrackerPage from "./Tracker";
+import TimeBox from "./Timebox";
+import PlayGroundPage from "./Playground";
 
-export { NotesPage, TrackerPage, PlayGroundPage };
+export { NotesPage, TrackerPage, PlayGroundPage, TimeBox };
 
 export function LandingPage() {
   return (
