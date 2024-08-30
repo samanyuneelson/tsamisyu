@@ -7,8 +7,9 @@ import WhatsappIcon from "../components/whatsappIcon/whatsappIcon";
 import NotesPage from "./notes";
 import TrackerPage from "./tracker";
 import PlayGroundPage from "./playground";
+import DashboardPage from "./Dashboard";
 
-export { NotesPage, TrackerPage, PlayGroundPage };
+export { NotesPage, TrackerPage, PlayGroundPage, DashboardPage };
 
 export function LandingPage() {
   return (
