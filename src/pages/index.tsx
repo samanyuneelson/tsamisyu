@@ -8,8 +8,9 @@ import NotesPage from "./Notes";
 import TrackerPage from "./Tracker";
 import TimeBox from "./Timebox";
 import PlayGroundPage from "./Playground";
+import DashboardPage from "./Dashboard";
 
-export { NotesPage, TrackerPage, PlayGroundPage, TimeBox };
+export { NotesPage, TrackerPage, PlayGroundPage, TimeBox, DashboardPage };
 
 export function LandingPage() {
   return (
