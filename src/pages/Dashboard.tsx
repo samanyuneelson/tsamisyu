@@ -30,6 +30,9 @@ function SideBar() {
         <Link className="p-3" to={"/tracker"}>
           Tracker
         </Link>
+        <Link className="p-3" to={"/timebox"}>
+          TimeBoxer
+        </Link>
       </div>
     </div>
   );

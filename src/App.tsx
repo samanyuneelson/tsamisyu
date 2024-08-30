@@ -5,6 +5,7 @@ import {
   TrackerPage,
   NotesPage,
   PlayGroundPage,
+  TimeBox,
   DashboardPage,
 } from "./pages";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -21,6 +22,7 @@ function App() {
         <Route path="/tracker" element={<TrackerPage />} />
         <Route path="/notes" element={<NotesPage />} />
         <Route path="/playground" element={<PlayGroundPage />} />
+        <Route path="/timebox" element={<TimeBox />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </Router>
