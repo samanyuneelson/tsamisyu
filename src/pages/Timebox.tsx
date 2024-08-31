@@ -1,4 +1,3 @@
-import { Box, Button, FormControlLabel, Radio, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import { map } from "lodash";
 
@@ -24,43 +23,32 @@ export default function TimeBox() {
   };
 
   return (
-    <Box height={"100vh"}>
-      <Box
-        display={"flex"}
-        flexDirection={"column"}
-        justifyContent={"space-between"}
-        height={"100%"}
-      >
-        <Box>Timeboxing</Box>
-        <Box
-          margin={1}
-          display={"flex"}
-          flexDirection={"column"}
-          height={"100%"}
-        >
+    <div className="h-screen">
+      <div className="flex flex-col justify-between h-full">
+        <div>Timeboxing</div>
+        <div className="flex flex-col m-3 h-full">
           {map(items, (item: string) => {
             return (
-              <FormControlLabel
-                style={{ pointerEvents: "none" }}
-                value={item}
-                control={
-                  <Radio
-                    style={{ pointerEvents: "auto" }}
-                    onChange={handleTaskComplete}
-                  />
-                }
-                label={item}
-                labelPlacement="end"
-              />
+              <label className="pointer-events-none p-1">
+                <input
+                  className="pointer-events-auto"
+                  type="radio"
+                  id="task"
+                  name="task"
+                  value={item}
+                  onChange={handleTaskComplete}
+                />
+                <span className="pl-1">{item}</span>
+              </label>
             );
           })}
-        </Box>
-        <Box display={"flex"} margin={1}>
-          <TextField
-            sx={{ width: "auto", flexGrow: "2" }}
+        </div>
+        <div className="flex m-2">
+          <input
+            className="w-auto grow shadow-md border border-solid border-sky-600 rounded-l-lg"
             id="task-box"
-            label="Write task here"
-            variant="outlined"
+            type="text"
+            placeholder="Write task here"
             value={task}
             onChange={(e) => {
               setTask(e.target.value);
@@ -71,11 +59,14 @@ export default function TimeBox() {
               }
             }}
           />
-          <Button variant="contained" onClick={addTask}>
+          <button
+            className="shadow-md rounded-r-lg p-3 bg-sky-600 text-white"
+            onClick={addTask}
+          >
             Add
-          </Button>
-        </Box>
-      </Box>
-    </Box>
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }
