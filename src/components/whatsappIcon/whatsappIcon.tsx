@@ -1,10 +1,9 @@
-import React from "react";
 import IconButton from "@mui/material/IconButton";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import { styled } from "@mui/material/styles";
 
 const CustomWhatsappIcon = styled(IconButton)`
-  display: block;
+  display: flex;
   position: sticky;
   width: 60px;
   height: 60px;
@@ -33,7 +32,12 @@ interface WhatsappProps {
 const WhatsappIcon = (props: WhatsappProps) => {
   const href = `https://wa.me/${props.number}`;
   return (
-    <CustomWhatsappIcon color="secondary" aria-label="Contact" size="large" onClick={() => window.open(href)}>
+    <CustomWhatsappIcon
+      color="secondary"
+      aria-label="Contact"
+      size="large"
+      onClick={() => window.open(href)}
+    >
       <WhatsAppIcon />
     </CustomWhatsappIcon>
   );
