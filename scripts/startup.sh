@@ -8,6 +8,7 @@ cd ..
 npm run start &
 server_pid1=$!
 cd ../karma/
+npm run build
 npm run start &
 server_pid2=$!
 
