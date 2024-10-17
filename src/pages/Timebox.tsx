@@ -1,30 +1,36 @@
 import { useEffect, useState } from "react";
-import { findIndex, map } from "lodash";
-interface Props {
+import { cloneDeep, find, findIndex, map } from "lodash";
+import axios from "axios";
+interface SideBarProps {
   sideBarInfo: Task;
-  setSideBarInfo: React.Dispatch<React.SetStateAction<Task>>;
+  setSideBarInfo: (task: Task | ((task: Task) => Task)) => void;
   tasks: Task[];
-  setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
+  setTasks: (tasks: Task[] | ((tasks: Task[]) => Task[])) => void;
 }
 
 interface ModalProps {
-  id: number;
-  setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
-  setSideBarInfo: React.Dispatch<React.SetStateAction<Task>>;
+  _id: string;
+  setTasks: (tasks: Task[] | ((tasks: Task[]) => Task[])) => void;
+  setSideBarInfo: (task: Task | ((task: Task) => Task)) => void;
 }
 
 interface Task {
-  id: number;
+  _id: string;
   isSideBar: boolean;
   title: string;
   description: string;
   isComplete: boolean;
 }
+const config = {
+  baseURL: "http://localhost:8000",
+  headers: {
+    "Content-Type": "application/json",
+  },
+};
 
 export default function TimeBox() {
-  const savedTasks = localStorage.getItem("tasks");
   const sidebarInit: Task = {
-    id: 0,
+    _id: "",
     isSideBar: false,
     title: "",
     description: "",
@@ -32,47 +38,87 @@ export default function TimeBox() {
   };
   const [sideBarInfo, setSideBarInfo] = useState<Task>(sidebarInit);
   const [taskTitle, setTaskTitle] = useState<string>("");
-  const [tasks, setTasks] = useState<Task[]>(
-    JSON.parse(savedTasks as string) ?? []
-  );
+  const [tasks, setTasks] = useState<Task[]>([]);
 
   useEffect(() => {
-    console.debug("useEffect#tasks", { tasks });
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-  }, [tasks]);
+    axios
+      .get("/karmas", config)
+      .then(function (response) {
+        // handle success
+        setTasks(response.data);
+        console.debug(response);
+      })
+      .catch(function (error) {
+        // handle error
+        console.debug(error);
+      })
+      .finally(function () {
+        // always executed
+      });
+  }, []);
 
   const addTask = () => {
-    const Uid = parseInt((Date.now() + Math.random() * 10000).toString());
-    const task: Task = {
-      id: Uid,
+    const task: Omit<Task, "_id"> = {
       isSideBar: false,
       title: taskTitle,
       description: "",
       isComplete: false,
     };
-    setTasks((oldItems) => [...oldItems, task]);
-    setTaskTitle("");
+    axios
+      .post(`/karmas`, task, config)
+      .then(function (response) {
+        // handle success
+        console.debug(response);
+        setTasks((oldItems) => [
+          ...oldItems,
+          { ...task, _id: response.data._id },
+        ]);
+      })
+      .catch(function (error) {
+        // handle error
+        console.debug(error);
+      })
+      .finally(function () {
+        // always executed
+        setTaskTitle("");
+      });
   };
 
   const handleTaskComplete = (e: any) => {
-    const id = e.target.value;
-    console.debug("timbox#handleTaskComplete", {
-      id,
-    });
-    setTasks((oldTasks) =>
-      oldTasks.map((task: Task) =>
-        task.id === parseInt(id)
-          ? { ...task, isComplete: !task.isComplete }
-          : task
-      )
+    const id: string = e.target.value;
+    const completedTask = cloneDeep(
+      find(tasks, (task) => {
+        return task._id === id;
+      })
     );
+    if (completedTask) completedTask.isComplete = !completedTask?.isComplete;
+    axios
+      .put(`/karmas/${id}/check`, completedTask, config)
+      .then(function (response) {
+        // handle success
+        console.debug(response);
+      })
+      .catch(function (error) {
+        // handle error
+        console.debug(error);
+      })
+      .finally(function () {
+        // always executed
+        console.debug("timbox#handleTaskComplete", {
+          id,
+        });
+        setTasks((oldTasks) =>
+          oldTasks.map((task: Task) =>
+            task._id === id ? { ...task, isComplete: !task.isComplete } : task
+          )
+        );
+      });
   };
 
   const toggleSidebar = (task: Task) => {
-    console.debug(task);
     setSideBarInfo({
       ...task,
-      isSideBar: task.id !== sideBarInfo.id ? true : !sideBarInfo.isSideBar,
+      isSideBar: task._id !== sideBarInfo._id ? true : !sideBarInfo.isSideBar,
     });
   };
 
@@ -89,13 +135,13 @@ export default function TimeBox() {
                   <div
                     onClick={(e: any) => toggleSidebar(task)}
                     className="p-2 border"
-                    key={task.id}
+                    key={task._id}
                   >
                     <input
                       type="checkbox"
                       id="task"
                       name="task"
-                      value={task.id}
+                      value={task._id}
                       onClick={(e) => e.stopPropagation()}
                       onChange={handleTaskComplete}
                     />
@@ -112,13 +158,13 @@ export default function TimeBox() {
                   <div
                     onClick={(e: any) => toggleSidebar(task)}
                     className="p-2 border"
-                    key={task.id}
+                    key={task._id}
                   >
                     <input
                       type="checkbox"
                       id="task"
                       name="task"
-                      value={task.id}
+                      value={task._id}
                       onClick={(e) => e.stopPropagation()}
                       onChange={handleTaskComplete}
                     />
@@ -180,7 +226,7 @@ function SideBar({
   setSideBarInfo,
   tasks,
   setTasks,
-}: Props): JSX.Element {
+}: SideBarProps): JSX.Element {
   const onChange = (e: any, property: string) => {
     setSideBarInfo((oldSidebarInfo) => ({
       ...oldSidebarInfo,
@@ -189,27 +235,56 @@ function SideBar({
   };
 
   const closeSidebar = () => {
-    setSideBarInfo({
-      id: 0,
+    setSideBarInfo((oldSidebarInfo) => ({
+      ...oldSidebarInfo,
       isSideBar: false,
-      title: "",
-      description: "",
-      isComplete: false,
-    });
-    if (sideBarInfo.id !== 0) {
-      const index = findIndex(tasks, (task) => task.id === sideBarInfo.id);
-      setTasks((oldTasks) =>
-        replaceItem(oldTasks, oldTasks[index], sideBarInfo)
-      );
+    }));
+    if (sideBarInfo._id !== "") {
+      axios
+        .put(`/karmas/${sideBarInfo._id}`, sideBarInfo, config)
+        .then(function (response) {
+          // handle success
+          console.debug(response);
+        })
+        .catch(function (error) {
+          // handle error
+          console.debug(error);
+        })
+        .finally(function () {
+          // always executed
+          const index = findIndex(
+            tasks,
+            (task) => task._id === sideBarInfo._id
+          );
+          setTasks((oldTasks) =>
+            replaceItem(oldTasks, oldTasks[index], sideBarInfo)
+          );
+        });
     }
   };
 
   const onKeyDown = (event: any) => {
     if (event.key === "Enter") {
-      const index = findIndex(tasks, (task) => task.id === sideBarInfo.id);
-      setTasks((oldTasks) =>
-        replaceItem(oldTasks, oldTasks[index], sideBarInfo)
-      );
+      axios
+        .put(`/karmas/${sideBarInfo._id}`, sideBarInfo, config)
+        .then(function (response) {
+          // handle success
+          console.debug(response);
+        })
+        .catch(function (error) {
+          // handle error
+          console.debug(error);
+        })
+        .finally(function () {
+          // always executed
+          const index = findIndex(
+            tasks,
+            (task) => task._id === sideBarInfo._id
+          );
+          setTasks((oldTasks) =>
+            replaceItem(oldTasks, oldTasks[index], sideBarInfo)
+          );
+        });
     }
     if (event.key === "Escape") {
       closeSidebar();
@@ -227,7 +302,7 @@ function SideBar({
         close
       </div>
       <DeleteModal
-        id={sideBarInfo.id}
+        _id={sideBarInfo._id}
         setTasks={setTasks}
         setSideBarInfo={setSideBarInfo}
       />
@@ -253,20 +328,32 @@ function SideBar({
   );
 }
 
-function DeleteModal({ id, setTasks, setSideBarInfo }: ModalProps) {
+function DeleteModal({ _id, setTasks, setSideBarInfo }: ModalProps) {
   const [showModal, setShowModal] = useState(false);
 
   const onDelete = () => {
-    console.debug("DeleteModal#onDelete", id);
-    setTasks((oldTasks) => oldTasks.filter((item) => item.id !== id));
-    setShowModal(false);
-    setSideBarInfo({
-      id: 0,
-      isSideBar: false,
-      title: "",
-      description: "",
-      isComplete: false,
-    });
+    console.debug("DeleteModal#onDelete", _id);
+    axios
+      .delete(`/karmas/${_id}`, config)
+      .then(function (response) {
+        // handle success
+        console.debug(response);
+      })
+      .catch(function (error) {
+        // handle error
+        console.debug(error);
+      })
+      .finally(function () {
+        // always executed
+        setTasks((oldTasks: Task[]) =>
+          oldTasks.filter((item) => item._id !== _id)
+        );
+        setShowModal(false);
+        setSideBarInfo((oldSidebarInfo) => ({
+          ...oldSidebarInfo,
+          isSideBar: false,
+        }));
+      });
   };
 
   return (
