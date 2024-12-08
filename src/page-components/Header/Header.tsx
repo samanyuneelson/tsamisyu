@@ -2,7 +2,7 @@ import { styled } from "@mui/material/styles";
 import { Box, Button, Typography } from "@mui/material";
 
 import headerImage from "../../assets/header.png";
-import resume from "../../assets/samanyuNeelson.pdf";
+import resume from "../../assets/Samanyu Neelson.pdf";
 
 const StandardHeader = styled(Box)`
   .App-header {
