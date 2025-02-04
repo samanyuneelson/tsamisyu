@@ -1,26 +1,41 @@
 import { useEffect, useState } from "react";
 import { cloneDeep, find, findIndex, map } from "lodash";
 import axios from "axios";
+import ContextMenu from "../components/ContextMenu/ContextMenu";
 interface SideBarProps {
-  sideBarInfo: Task;
-  setSideBarInfo: (task: Task | ((task: Task) => Task)) => void;
-  tasks: Task[];
-  setTasks: (tasks: Task[] | ((tasks: Task[]) => Task[])) => void;
+  sideBarInfo: Karma;
+  setSideBarInfo: (task: Karma | ((task: Karma) => Karma)) => void;
+  tasks: Karma[];
+  setTasks: (tasks: Karma[] | ((tasks: Karma[]) => Karma[])) => void;
 }
 
 interface ModalProps {
   _id: string;
-  setTasks: (tasks: Task[] | ((tasks: Task[]) => Task[])) => void;
-  setSideBarInfo: (task: Task | ((task: Task) => Task)) => void;
+  setTasks: (tasks: Karma[] | ((tasks: Karma[]) => Karma[])) => void;
+  setSideBarInfo: (task: Karma | ((task: Karma) => Karma)) => void;
 }
 
-interface Task {
-  _id: string;
-  isSideBar: boolean;
+interface Karma {
   title: string;
+  myDay?: string;
   description: string;
   isComplete: boolean;
+  list: string;
+  _id: string;
+  isSideBar: boolean;
 }
+
+export interface KarmaList {
+  _id: string;
+  listName: string;
+}
+
+interface LeftPanelProps {
+  setList: (list: KarmaList) => void;
+  setListUpdateFlag: (flag: boolean) => void;
+  listUpdateFlag: boolean;
+}
+
 const config = {
   baseURL: "http://localhost:8000",
   headers: {
@@ -29,20 +44,26 @@ const config = {
 };
 
 export default function TimeBox() {
-  const sidebarInit: Task = {
+  const sidebarInit: Karma = {
     _id: "",
     isSideBar: false,
     title: "",
     description: "",
     isComplete: false,
+    list: "default",
   };
-  const [sideBarInfo, setSideBarInfo] = useState<Task>(sidebarInit);
+  const [sideBarInfo, setSideBarInfo] = useState<Karma>(sidebarInit);
   const [taskTitle, setTaskTitle] = useState<string>("");
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [tasks, setTasks] = useState<Karma[]>([]);
+  const [listUpdateFlag, setListUpdateFlag] = useState<boolean>(false);
+  const [list, setList] = useState<KarmaList>({
+    _id: "default",
+    listName: "default",
+  });
 
   useEffect(() => {
     axios
-      .get("/karmas", config)
+      .get(`/karmas/karma?list=${list._id}`, config)
       .then(function (response) {
         // handle success
         setTasks(response.data);
@@ -55,17 +76,18 @@ export default function TimeBox() {
       .finally(function () {
         // always executed
       });
-  }, []);
+  }, [list._id]);
 
   const addTask = () => {
-    const task: Omit<Task, "_id"> = {
+    const task: Omit<Karma, "_id"> = {
       isSideBar: false,
       title: taskTitle,
       description: "",
       isComplete: false,
+      list: list._id,
     };
     axios
-      .post(`/karmas`, task, config)
+      .post(`/karmas/karma`, task, config)
       .then(function (response) {
         // handle success
         console.debug(response);
@@ -93,7 +115,7 @@ export default function TimeBox() {
     );
     if (completedTask) completedTask.isComplete = !completedTask?.isComplete;
     axios
-      .put(`/karmas/${id}/check`, completedTask, config)
+      .put(`/karmas/karma/${id}`, completedTask, config)
       .then(function (response) {
         // handle success
         console.debug(response);
@@ -108,28 +130,72 @@ export default function TimeBox() {
           id,
         });
         setTasks((oldTasks) =>
-          oldTasks.map((task: Task) =>
+          oldTasks.map((task: Karma) =>
             task._id === id ? { ...task, isComplete: !task.isComplete } : task
           )
         );
       });
   };
 
-  const toggleSidebar = (task: Task) => {
+  const toggleSidebar = (task: Karma) => {
     setSideBarInfo({
       ...task,
       isSideBar: task._id !== sideBarInfo._id ? true : !sideBarInfo.isSideBar,
     });
   };
 
+  const onEditList = (e: any, list: KarmaList) => {
+    axios
+      .put(
+        `/karmas/karmalist/${list._id}`,
+        { _id: list._id, listName: e.target.value },
+        config
+      )
+      .then(function (response) {
+        // handle success
+        console.debug(response);
+      })
+      .catch(function (error) {
+        // handle error
+        console.debug(error);
+      })
+      .finally(function () {
+        // always executed
+        setList({ _id: list._id, listName: e.target.value });
+        setListUpdateFlag(true);
+      });
+  };
+
+  const onChangeList = (e: any) => {
+    setList((oldList) => ({ ...oldList, listName: e.target.value }));
+  };
+
   return (
     <div className="h-screen flex flex-row">
+      <LeftPanel
+        setListUpdateFlag={setListUpdateFlag}
+        listUpdateFlag={listUpdateFlag}
+        setList={setList}
+      />
       <div className="flex flex-col justify-between h-full w-full">
         <div>Timeboxing</div>
+        {list._id !== "default" && (
+          <div>
+            <input
+              type="text"
+              id="sidebar-task-title"
+              onKeyDown={(e: any) => {
+                if (e.key === "Enter") onEditList(e, list);
+              }}
+              onChange={(e: any) => onChangeList(e)}
+              value={list.listName}
+            ></input>
+          </div>
+        )}
         <div className=" h-full">
           <div>To Do</div>
           <div className="flex flex-col m-3">
-            {map(tasks, (task: Task) => {
+            {map(tasks, (task: Karma) => {
               if (!task.isComplete)
                 return (
                   <div
@@ -152,7 +218,7 @@ export default function TimeBox() {
           </div>
           <div>Completed</div>
           <div className="flex flex-col m-3">
-            {map(tasks, (task: Task) => {
+            {map(tasks, (task: Karma) => {
               if (task.isComplete)
                 return (
                   <div
@@ -241,7 +307,7 @@ function SideBar({
     }));
     if (sideBarInfo._id !== "") {
       axios
-        .put(`/karmas/${sideBarInfo._id}`, sideBarInfo, config)
+        .put(`/karmas/karma/${sideBarInfo._id}`, sideBarInfo, config)
         .then(function (response) {
           // handle success
           console.debug(response);
@@ -266,7 +332,7 @@ function SideBar({
   const onKeyDown = (event: any) => {
     if (event.key === "Enter") {
       axios
-        .put(`/karmas/${sideBarInfo._id}`, sideBarInfo, config)
+        .put(`/karmas/karma/${sideBarInfo._id}`, sideBarInfo, config)
         .then(function (response) {
           // handle success
           console.debug(response);
@@ -328,13 +394,64 @@ function SideBar({
   );
 }
 
-function DeleteModal({ _id, setTasks, setSideBarInfo }: ModalProps) {
-  const [showModal, setShowModal] = useState(false);
+function LeftPanel({
+  setList,
+  setListUpdateFlag,
+  listUpdateFlag,
+}: LeftPanelProps) {
+  const [taskLists, setTaskLists] = useState<KarmaList[]>([]);
+  const [taskListTitle, setTaskListTitle] = useState<string>("");
 
-  const onDelete = () => {
-    console.debug("DeleteModal#onDelete", _id);
+  const getKarmaList = () => {
     axios
-      .delete(`/karmas/${_id}`, config)
+      .get(`/karmas/karmalist`, config)
+      .then(function (response) {
+        // handle success
+        setTaskLists(response.data);
+        console.debug(response);
+      })
+      .catch(function (error) {
+        // handle error
+        console.debug(error);
+      })
+      .finally(function () {
+        // always executed
+      });
+  };
+
+  useEffect(() => {
+    if (taskLists.length === 0 || listUpdateFlag) getKarmaList();
+    setListUpdateFlag(false);
+  }, [listUpdateFlag, setListUpdateFlag, taskLists.length]);
+
+  const createList = () => {
+    const taskList: Omit<KarmaList, "_id"> = {
+      listName: taskListTitle,
+    };
+    axios
+      .post(`/karmas/karmalist`, taskList, config)
+      .then(function (response) {
+        // handle success
+        console.debug(response);
+        setTaskLists((oldLists) => [
+          ...oldLists,
+          { _id: response.data._id, listName: taskListTitle },
+        ]);
+      })
+      .catch(function (error) {
+        // handle error
+        console.debug(error);
+      })
+      .finally(function () {
+        // always executed
+        setTaskListTitle("");
+      });
+  };
+
+  const deleteTaskList = (_id: any) => {
+    console.debug("DeleteModal#onDeleteTaskList", _id);
+    axios
+      .delete(`/karmas/karmalist/${_id}`, config)
       .then(function (response) {
         // handle success
         console.debug(response);
@@ -345,7 +462,83 @@ function DeleteModal({ _id, setTasks, setSideBarInfo }: ModalProps) {
       })
       .finally(function () {
         // always executed
-        setTasks((oldTasks: Task[]) =>
+        getKarmaList();
+      });
+  };
+
+  return (
+    <div className="flex flex-col justify-between h-full">
+      <div>Left Sidebar</div>
+      <div className="h-full">
+        <div className="p-2 border">My Day</div>
+        <div
+          className="p-2 border"
+          onClick={() => setList({ _id: "default", listName: "default" })}
+        >
+          Tasks
+        </div>
+        {map(taskLists, (taskList: KarmaList) => {
+          return (
+            <div
+              className="p-2 border"
+              key={taskList._id}
+              id={taskList._id}
+              onClick={() => setList(taskList)}
+            >
+              {taskList.listName}
+              <ContextMenu
+                item={taskList}
+                contextFunctionList={[
+                  { fn: deleteTaskList, modalSpecs: { isModal: true } },
+                ]}
+              />
+            </div>
+          );
+        })}
+      </div>
+      <div className="flex m-2">
+        <input
+          className="w-auto grow shadow-md border border-solid border-sky-600 rounded-l-lg p-2"
+          id="list-box"
+          type="text"
+          placeholder="New List"
+          value={taskListTitle}
+          onChange={(e) => {
+            setTaskListTitle(e.target.value);
+          }}
+          onKeyDown={(event) => {
+            console.debug("test");
+            if (event.key === "Enter") {
+              createList();
+            }
+          }}
+        />
+        <button className="shadow-md rounded-r-lg p-3 bg-sky-600 text-white">
+          Group
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function DeleteModal({ _id, setTasks, setSideBarInfo }: ModalProps) {
+  const [showModal, setShowModal] = useState(false);
+
+  const onDelete = () => {
+    console.debug("DeleteModal#onDelete", _id);
+    axios
+      .delete(`/karmas/karma/${_id}`, config)
+      .then(function (response) {
+        // handle success
+        console.debug(response);
+      })
+      .catch(function (error) {
+        // handle error
+        console.debug(error);
+      })
+      .finally(function () {
+        // always executed
+        setTasks((oldTasks: Karma[]) =>
           oldTasks.filter((item) => item._id !== _id)
         );
         setShowModal(false);
