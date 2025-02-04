@@ -1,6 +1,7 @@
 import { PropsWithChildren, useEffect, useState } from "react";
 import { cloneDeep, find, findIndex, map } from "lodash";
 import axios from "axios";
+import ContextMenu from "../components/ContextMenu/ContextMenu";
 interface SideBarProps {
   sideBarInfo: Karma;
   setSideBarInfo: (task: Karma | ((task: Karma) => Karma)) => void;
@@ -24,7 +25,7 @@ interface Karma {
   isSideBar: boolean;
 }
 
-interface KarmaList {
+export interface KarmaList {
   _id: string;
   listName: string;
 }
@@ -33,11 +34,6 @@ interface LeftPanelProps {
   setList: (list: KarmaList) => void;
   setListUpdateFlag: (flag: boolean) => void;
   listUpdateFlag: boolean;
-}
-
-interface ContextMenuProps extends PropsWithChildren {
-  targetId: string;
-  options: string[];
 }
 
 const config = {
@@ -406,24 +402,27 @@ function LeftPanel({
   const [taskLists, setTaskLists] = useState<KarmaList[]>([]);
   const [taskListTitle, setTaskListTitle] = useState<string>("");
 
+  const getKarmaList = () => {
+    axios
+      .get(`/karmas/karmalist`, config)
+      .then(function (response) {
+        // handle success
+        setTaskLists(response.data);
+        console.debug(response);
+      })
+      .catch(function (error) {
+        // handle error
+        console.debug(error);
+      })
+      .finally(function () {
+        // always executed
+      });
+  };
+
   useEffect(() => {
-    if (!taskLists || listUpdateFlag)
-      axios
-        .get(`/karmas/karmalist`, config)
-        .then(function (response) {
-          // handle success
-          setTaskLists(response.data);
-          console.debug(response);
-        })
-        .catch(function (error) {
-          // handle error
-          console.debug(error);
-        })
-        .finally(function () {
-          // always executed
-        });
+    if (taskLists.length === 0 || listUpdateFlag) getKarmaList();
     setListUpdateFlag(false);
-  }, [listUpdateFlag, setListUpdateFlag, taskLists]);
+  }, [listUpdateFlag, setListUpdateFlag, taskLists.length]);
 
   const createList = () => {
     const taskList: Omit<KarmaList, "_id"> = {
@@ -449,6 +448,24 @@ function LeftPanel({
       });
   };
 
+  const deleteTaskList = (_id: any) => {
+    console.debug("DeleteModal#onDeleteTaskList", _id);
+    axios
+      .delete(`/karmas/karmalist/${_id}`, config)
+      .then(function (response) {
+        // handle success
+        console.debug(response);
+      })
+      .catch(function (error) {
+        // handle error
+        console.debug(error);
+      })
+      .finally(function () {
+        // always executed
+        getKarmaList();
+      });
+  };
+
   return (
     <div className="flex flex-col justify-between h-full">
       <div>Left Sidebar</div>
@@ -465,9 +482,16 @@ function LeftPanel({
             <div
               className="p-2 border"
               key={taskList._id}
+              id={taskList._id}
               onClick={() => setList(taskList)}
             >
               {taskList.listName}
+              <ContextMenu
+                item={taskList}
+                contextFunctionList={[
+                  { fn: deleteTaskList, modalSpecs: { isModal: true } },
+                ]}
+              />
             </div>
           );
         })}
@@ -584,92 +608,3 @@ function DeleteModal({ _id, setTasks, setSideBarInfo }: ModalProps) {
     </>
   );
 }
-
-// function ContextMenu({ targetId, options }: ContextMenuProps) {
-//   const [contextData, setContextData] = useState({
-//     visible: false,
-//     posX: 0,
-//     posY: 0,
-//   });
-//   const contextRef = useRef<HTMLDivElement>(null);
-
-//   useEffect(() => {
-//     // const handleContextMenu = (event: any) => {
-//     //   const targetElement = document.getElementById(targetId);
-//     //   console.debug("gg", { target: event.target });
-//     //   if (targetElement && targetElement.contains(event.target)) {
-//     //     event.preventDefault();
-//     //     setContextData({
-//     //       visible: true,
-//     //       posX: event.clientX,
-//     //       posY: event.clientY,
-//     //     });
-//     //   } else if (
-//     //     contextRef.current &&
-//     //     !contextRef.current.contains(event.target)
-//     //   ) {
-//     //     setContextData({ ...contextData, visible: false });
-//     //   }
-//     // };
-
-//     const handleClick = (event: any) => {
-//       console.debug("gg");
-//       // if (contextRef.current && !contextRef.current.contains(event.target)) {
-//       //   setContextData({ ...contextData, visible: false });
-//       // }
-//     };
-
-//     document.addEventListener("click", handleClick);
-//     // document.addEventListener("contextmenu", handleContextMenu);
-//     // return () => {
-//     //   document.addEventListener("click", handleClick);
-//     //   document.addEventListener("contextmenu", handleContextMenu);
-//     // };
-//   }, [contextData, targetId]);
-
-//   useLayoutEffect(() => {
-//     if (
-//       contextRef.current &&
-//       contextData.posX + contextRef.current?.offsetWidth > window.innerWidth
-//     ) {
-//       setContextData({
-//         ...contextData,
-//         posX: contextData.posX - contextRef.current?.offsetWidth,
-//       });
-//     }
-//     if (
-//       contextRef.current &&
-//       contextData.posY + contextRef.current?.offsetHeight > window.innerHeight
-//     ) {
-//       setContextData({
-//         ...contextData,
-//         posY: contextData.posY - contextRef.current?.offsetHeight,
-//       });
-//     }
-//   }, [contextData]);
-
-//   const handleClick = (event: any) => {
-//     console.debug("gg");
-//     // if (contextRef.current && !contextRef.current.contains(event.target)) {
-//     //   setContextData({ ...contextData, visible: false });
-//     // }
-//   };
-
-//   return (
-//     <div
-//       ref={contextRef}
-//       className="contextMenu"
-//       style={{
-//         display: `${contextData.visible ? "block" : "none"}`,
-//         left: contextData.posX,
-//         top: contextData.posY,
-//       }}
-//     >
-//       <div>
-//         {options.map((option) => (
-//           <li key={option}>{option}</li>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// }
